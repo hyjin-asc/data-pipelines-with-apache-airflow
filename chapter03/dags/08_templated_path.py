@@ -18,7 +18,7 @@ fetch_events = BashOperator(
     task_id="fetch_events",
     bash_command=(
         "mkdir -p /data/events && "
-        "curl -o /data/events/{{ds}}.json "
+        "curl -o /data/events/{{ds}}.json " # 날짜별로 개별 파일에 이벤트 데이터 쓰기
         "http://events_api:5000/events?"
         "start_date={{ds}}&"
         "end_date={{next_ds}}"
@@ -27,7 +27,7 @@ fetch_events = BashOperator(
 )
 
 
-def _calculate_stats(**context):
+def _calculate_stats(**context): # 모든 콘텍스트 변수 수신
     """Calculates event statistics."""
     input_path = context["templates_dict"]["input_path"]
     output_path = context["templates_dict"]["output_path"]
@@ -42,7 +42,7 @@ def _calculate_stats(**context):
 calculate_stats = PythonOperator(
     task_id="calculate_stats",
     python_callable=_calculate_stats,
-    templates_dict={
+    templates_dict={  # 템플릿 되는 값을 전달
         "input_path": "/data/events/{{ds}}.json",
         "output_path": "/data/stats/{{ds}}.csv",
     },

@@ -19,8 +19,8 @@ fetch_events = BashOperator(
         "mkdir -p /data/events && "
         "curl -o /data/events.json "
         "http://events_api:5000/events?"
-        "start_date=2019-01-01&"
-        "end_date=2019-01-02"
+        "start_date=2019-01-01&" # 포함되는 날짜
+        "end_date=2019-01-02" # 포함되지 않는 날짜 (즉, 2019-01-01 00:00:00과 2019-01-01 23:59:59 사이 이벤트 데이터 획득)
     ),
     dag=dag,
 )

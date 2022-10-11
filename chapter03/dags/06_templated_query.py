@@ -20,7 +20,7 @@ fetch_events = BashOperator(
         "mkdir -p /data/events && "
         "curl -o /data/events.json "
         "http://events_api:5000/events?"
-        "start_date={{execution_date.strftime('%Y-%m-%d')}}&"
+        "start_date={{execution_date.strftime('%Y-%m-%d')}}&" # Jinja 템플릿으로 형식화된 매개변수 삽입
         "end_date={{next_execution_date.strftime('%Y-%m-%d')}}"
     ),
     dag=dag,

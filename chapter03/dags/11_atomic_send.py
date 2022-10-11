@@ -60,7 +60,7 @@ def _send_stats(email, **context):
     stats = pd.read_csv(context["templates_dict"]["stats_path"])
     email_stats(stats, email=email)
 
-
+# 이메일 보내는 작업을 별도 태스크로 분리
 send_stats = PythonOperator(
     task_id="send_stats",
     python_callable=_send_stats,
